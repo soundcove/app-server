@@ -33,11 +33,11 @@ app
 
 // Deploy.
 (function(listener, app, certs){
-  if (typeof args['http'] === 'undefined' || args['http']) {
+  if (typeof args.http === 'undefined' || args.http) {
     http.Server(app).listen(80, () => listener('HTTP'));
   }
 
-  if (typeof args['https'] === 'undefined' || args['https']) {
+  if (typeof args.https === 'undefined' || args.https) {
     https.Server(certs, app).listen(443, () => listener('HTTPS'));
   }
 })(function(server){
