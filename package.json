@@ -23,5 +23,9 @@
   "homepage": "https://github.com/soundcove",
   "engines": {
     "node": "^4.1.0"
+  },
+  "dependencies": {
+    "express": "latest",
+    "swig": "latest"
   }
 }
