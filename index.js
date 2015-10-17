@@ -17,7 +17,10 @@ app
 
 // Static files
 app
-.use('/static', express.static('/static', {dotfiles:'deny', maxAge:'6h'}));
+.use('/static', express.static(path.join(__dirname, 'static'), {
+  dotfiles:'deny',
+  maxAge:'6h'
+}));
 
 // Routes
 app
