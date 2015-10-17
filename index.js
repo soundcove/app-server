@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 
 const http = require('http'),
@@ -6,8 +7,12 @@ const http = require('http'),
       path = require('path'),
       swig = require('swig'),
       express = require('express'),
+      rawargs = process.argv.slice(2),
 
 app = express();
+
+let args = lib.args(rawargs);
+
 
 // Templating engine
 app
@@ -31,8 +36,13 @@ app
 
 // Deploy.
 (function(listener, app, certs){
-  http.Server(app).listen(80, () => listener('HTTP'));
-  https.Server(certs, app).listen(443, () => listener('HTTPS'));
+  if (typeof args['http'] === 'undefined' || args['http']) {
+    http.Server(app).listen(80, () => listener('HTTP'));
+  }
+
+  if (typeof args['https'] === 'undefined' || args['https']) {
+    https.Server(certs, app).listen(443, () => listener('HTTPS'));
+  }
 })(function(server){
   console.log(server + ' server is online.');
 }, app, {
