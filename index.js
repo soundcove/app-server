@@ -21,10 +21,10 @@ app
 
 // Routes
 app
-.get(['/', '/home', '/index'], () => {})
-.get(['/me', '/you'], () => {})
-.get(['/settings', '/account'], () => {})
-.get('*', () => {});
+.get(['/', '/home', '/index'], lib.home)
+.get(['/me', '/you'], lib.me)
+.get(['/settings', '/account'], lib.settings)
+.get('*', lib.groups);
 
 // Deploy.
 (function(listener, app, certs){
