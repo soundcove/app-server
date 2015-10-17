@@ -1,6 +1,6 @@
-client
+app-server
 ======
-The interface for the SoundCove platform.
+This server delivers the application the to client.
 
 ## Contributing
 Please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information on how to contribute to soundcove.
