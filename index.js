@@ -7,8 +7,7 @@ const http = require('http'),
       path = require('path'),
       swig = require('swig'),
       express = require('express'),
-      rawargs = process.argv.slice(2),
-      args = lib.args(rawargs),
+      args = lib.args(process.argv.slice(2));
 
 app = express();
 
