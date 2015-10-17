@@ -8,23 +8,21 @@ const http = require('http'),
       swig = require('swig'),
       express = require('express'),
       rawargs = process.argv.slice(2),
+      args = lib.args(rawargs),
 
 app = express();
-
-let args = lib.args(rawargs);
-
 
 // Templating engine
 app
 .engine('html', swig.renderFile)
 .set('view engine', 'html')
-.set('views', path.join(__dirname, 'views'));
+.set('views', args.views ? path.resolve(args.views) : path.join(__dirname, 'views'));
 
 // Static files
 app
-.use('/static', express.static(path.join(__dirname, 'static'), {
+.use('/static', args.static ? path.resolve(args.static) : express.static(path.join(__dirname, 'static'), {
   dotfiles:'deny',
-  maxAge:'6h'
+  maxAge:args.maxAge || '6h'
 }));
 
 // Routes
