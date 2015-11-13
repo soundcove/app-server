@@ -1,6 +1,6 @@
 {
   "name": "app-server",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "The application and application delivery server.",
   "main": "index.js",
   "scripts": {
