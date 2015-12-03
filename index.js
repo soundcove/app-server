@@ -14,7 +14,7 @@ app = express();
 const opts = global.opts = {
   views: path.resolve(args.views ? args.views : __dirname + '/views'),
   static: path.resolve(args.static ? args.static : __dirname + '/static'),
-  maxAge: args.maxAge || '6h',
+  age: args.age || '6h',
   http: typeof args.http === 'undefined' || args.http,
   https: args.https || false,
   host: args.host || '0.0.0.0',
