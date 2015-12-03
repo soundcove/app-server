@@ -12,8 +12,8 @@ const http = require('http'),
 app = express();
 
 const opts = global.opts = {
-  views: path.resolve(args.views ? args.views : __dirname + 'views'),
-  static: path.resolve(args.static ? args.static : __dirname + 'static'),
+  views: path.resolve(args.views ? args.views : __dirname + '/views'),
+  static: path.resolve(args.static ? args.static : __dirname + '/static'),
   maxAge: args.maxAge || '6h',
   http: typeof args.http === 'undefined' || args.http,
   https: typeof args.https === 'undefined' || args.https
@@ -26,11 +26,16 @@ app
 .set('views', opts.views);
 
 // Static files
-app
-.use('/static', lib.static());
+app.use('/static', lib.static());
 
 // App
-app.get(['/', '/home', '/index'], lib.app);
+app.get(['/'], lib.app);
+
+// Redirect to main app for any other requests.
+app.get('*', (x, r) => r.redirect('/'));
+
+// 404 for other requests
+app.all('*', (x, r) => r.status(404).send({ 'error': 'not found' }));
 
 // Deploy.
 (function(listener, app, certs){
