@@ -32,10 +32,7 @@ app
 app.use('/static', lib.static());
 
 // App
-app.get(['/'], lib.app);
-
-// Redirect to main app for any other requests.
-app.get('*', (x, r) => r.redirect('/'));
+app.get('*', lib.app);
 
 // 404 for other requests
 app.all('*', (x, r) => r.status(404).send({ 'error': 'not found' }));
