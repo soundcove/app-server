@@ -11,7 +11,7 @@ const http = require('http'),
 
 app = express();
 
-let opts = {
+const opts = global.opts = {
   views: path.resolve(args.views ? args.views : __dirname + 'views'),
   static: path.resolve(args.static ? args.static : __dirname + 'static'),
   maxAge: args.maxAge || '6h',
@@ -27,17 +27,10 @@ app
 
 // Static files
 app
-.use('/static', express.static(opts.static, {
-  dotfiles:'deny',
-  maxAge: opts.maxAge
-}));
+.use('/static', lib.static());
 
-// Routes
-app
-.get(['/', '/home', '/index'], lib.home)
-.get(['/me', '/you'], lib.me)
-.get(['/settings', '/account'], lib.settings)
-.get('*', lib.groups);
+// App
+app.get(['/', '/home', '/index'], lib.app);
 
 // Deploy.
 (function(listener, app, certs){
