@@ -4,6 +4,18 @@ This server sends the application to requesting clients.  It's designed to cache
 
 The app server uses Swig templates to separate components of the website into files - which are then rendered into one file when requested.  The app then uses HTML5 URLs (or falls back on hash URLs) to "switch" between pages.  This way there is only one request to the app server.
 
+## Installation
+
+Clone this repository and setup:
+
+```
+$ git clone https://github.com/soundcove/app-server.git my-app
+$ cd my-app
+$ npm run setup
+```
+
+Note: `npm run setup` triggers `npm link` to give you access to the `app` command, you may need to run `sudo npm install` if you don't have permission to your npm bin. 
+
 ## Usage
 
 ```
