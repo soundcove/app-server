@@ -16,7 +16,10 @@ const opts = global.opts = {
   static: path.resolve(args.static ? args.static : __dirname + '/static'),
   maxAge: args.maxAge || '6h',
   http: typeof args.http === 'undefined' || args.http,
-  https: args.https || false
+  https: args.https || false,
+  host: args.host || '0.0.0.0',
+  port: args.port || 80,
+  sport: args.sport || 443
 };
 
 // Templating engine
@@ -39,10 +42,20 @@ app.all('*', (x, r) => r.status(404).send({ 'error': 'not found' }));
 
 // Deploy.
 (function(listener, app, certs){
-  if (opts.http) http.Server(app).listen(80, () => listener('HTTP'));
-  if (opts.https) https.Server(certs, app).listen(443, () => listener('HTTPS'));
+  if (opts.http)
+  http.Server(app).listen(
+    opts.port, opts.host,
+    () => listener('http')
+  );
+
+  if (opts.https)
+  https.Server(certs, app).listen(
+    opts.sport, opts.host,
+    () => listener('https')
+  );
+
 })(function(server){
-  console.log(server + ' server is online.');
+  console.log(server + '://' + opts.host + ':' + opts.port + '/');
 }, app, {
   // TODO: Get SSL certs.
 });
