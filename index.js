@@ -11,17 +11,25 @@ const http = require('http'),
 
 app = express();
 
+let opts = {
+  views: path.resolve(args.views ? args.views : __dirname + 'views'),
+  static: path.resolve(args.static ? args.static : __dirname + 'static'),
+  maxAge: args.maxAge || '6h',
+  http: typeof args.http === 'undefined' || args.http,
+  https: typeof args.https === 'undefined' || args.https
+};
+
 // Templating engine
 app
 .engine('html', swig.renderFile)
 .set('view engine', 'html')
-.set('views', args.views ? path.resolve(args.views) : path.join(__dirname, 'views'));
+.set('views', opts.views);
 
 // Static files
 app
-.use('/static', args.static ? path.resolve(args.static) : express.static(path.join(__dirname, 'static'), {
+.use('/static', express.static(opts.static, {
   dotfiles:'deny',
-  maxAge:args.maxAge || '6h'
+  maxAge: opts.maxAge
 }));
 
 // Routes
@@ -33,13 +41,8 @@ app
 
 // Deploy.
 (function(listener, app, certs){
-  if (typeof args.http === 'undefined' || args.http) {
-    http.Server(app).listen(80, () => listener('HTTP'));
-  }
-
-  if (typeof args.https === 'undefined' || args.https) {
-    https.Server(certs, app).listen(443, () => listener('HTTPS'));
-  }
+  if (opts.http) http.Server(app).listen(80, () => listener('HTTP'));
+  if (opts.https) https.Server(certs, app).listen(443, () => listener('HTTPS'));
 })(function(server){
   console.log(server + ' server is online.');
 }, app, {
