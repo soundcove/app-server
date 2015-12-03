@@ -16,7 +16,7 @@ const opts = global.opts = {
   static: path.resolve(args.static ? args.static : __dirname + '/static'),
   maxAge: args.maxAge || '6h',
   http: typeof args.http === 'undefined' || args.http,
-  https: typeof args.https === 'undefined' || args.https
+  https: args.https || false
 };
 
 // Templating engine
