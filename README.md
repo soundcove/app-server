@@ -11,7 +11,7 @@ $ app [options]
 ```
 
 ### options
-These options follow the format `--name=value`, and for values with spaces, use quotes `--name="spaced value"`.
+These options follow the format `--name=value`, e.g. `--foo="bar"`, `--foo=1337`, `--foo=false`.
 
  - `--views`: An alternative path to your Swig views.
  - `--static`: An alternative path to your static files.
