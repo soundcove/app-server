@@ -74,7 +74,6 @@ module.exports = {
 
   config: {
     desc: 'File for app config.',
-    default: {},
     alias: 'C',
     type: 'file',
     config: true,
@@ -82,7 +81,6 @@ module.exports = {
 
   serve: {
     desc: 'File for express.static config.',
-    default: {},
     alias: 'S',
     type: 'file',
     config: true,
