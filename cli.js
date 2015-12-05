@@ -17,14 +17,14 @@ module.exports = {
   scripts: {
     desc: 'Directory for scripts.',
     default: 'scripts',
-    alias: 's',
+    alias: 'j',
     type: 'directory',
   },
 
   styles: {
     desc: 'Directory for styles.',
     default: 'styles',
-    alias: 'c',
+    alias: 's',
     type: 'directory',
   },
 
@@ -74,7 +74,7 @@ module.exports = {
 
   config: {
     desc: 'File for app config.',
-    alias: 'C',
+    alias: 'c',
     type: 'file',
     config: true,
   },

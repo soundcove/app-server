@@ -21,16 +21,16 @@ Options:
   --help         Show help                                                      
   --app, -a      File for application.                   [default: "index.html"]
   --bower, -b    Directory for bower_components.   [default: "bower_components"]
-  --scripts, -s  Directory for scripts.                     [default: "scripts"]
-  --styles, -c   Directory for styles.                       [default: "styles"]
+  --scripts, -j  Directory for scripts.                     [default: "scripts"]
+  --styles, -s   Directory for styles.                       [default: "styles"]
   --static, -x   Directory for static serve.                 [default: "static"]
   --http, -h     Enable or disable HTTP                          [default: true]
   --https, -H    Enable or disable HTTPS.                       [default: false]
   --host, -d     HTTP and HTTPS servers' host address.      [default: "0.0.0.0"]
   --port, -p     HTTP and HTTPS servers's host addresses.          [default: 80]
   --sport, -P    HTTPS server's port.                             [default: 443]
-  --config, -C   File for app config.                                           
-  --serve, -S    File for express.static config.                               
+  --config, -c   File for app config.                                           
+  --serve, -S    File for express.static config.                                                             
 ```
 
 ## Contributing
