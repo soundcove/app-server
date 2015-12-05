@@ -2,35 +2,35 @@ module.exports = {
 
   app: {
     desc: 'File path for application.',
-    default: 'index.html',
+    default: process.cwd() + '/index.html',
     alias: 'a',
     type: 'file',
   },
 
   bower: {
     desc: 'Directory path for bower_components.',
-    default: null,
+    default: process.cwd() + '/bower_components',
     alias: 'b',
     type: 'directory',
   },
 
   scripts: {
     desc: 'Directory path for scripts.',
-    default: 'scripts',
+    default: process.cwd() + '/scripts',
     alias: 's',
     type: 'directory',
   },
 
   styles: {
     desc: 'Directory path for styles.',
-    default: 'styles',
+    default: process.cwd() + '/styles',
     alias: 'c',
     type: 'directory',
   },
 
   static: {
     desc: 'Directory path for static serve.',
-    default: 'static',
+    default: process.cwd() + '/static',
     alias: 'x',
     type: 'directory',
   },
