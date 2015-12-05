@@ -11,5 +11,5 @@
   "unused": true,
   "eqnull": true,
   "loopfunc": true,
-  "globals": { "opts": true }
+  "globals": { "args": true }
 }
