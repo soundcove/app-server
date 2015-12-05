@@ -1,35 +1,35 @@
 module.exports = {
 
   app: {
-    desc: 'File path for application.',
+    desc: 'File for application.',
     default: 'index.html',
     alias: 'a',
     type: 'file',
   },
 
   bower: {
-    desc: 'Directory path for bower_components.',
+    desc: 'Directory for bower_components.',
     default: 'bower_components',
     alias: 'b',
     type: 'directory',
   },
 
   scripts: {
-    desc: 'Directory path for scripts.',
+    desc: 'Directory for scripts.',
     default: 'scripts',
     alias: 's',
     type: 'directory',
   },
 
   styles: {
-    desc: 'Directory path for styles.',
+    desc: 'Directory for styles.',
     default: 'styles',
     alias: 'c',
     type: 'directory',
   },
 
   static: {
-    desc: 'Directory path for static serve.',
+    desc: 'Directory for static serve.',
     default: 'static',
     alias: 'x',
     type: 'directory',
@@ -73,7 +73,7 @@ module.exports = {
   },
 
   config: {
-    desc: 'File path to app config.',
+    desc: 'File for app config.',
     default: {},
     alias: 'C',
     type: 'file',
@@ -81,7 +81,7 @@ module.exports = {
   },
 
   serve: {
-    desc: 'File path to express.static config.',
+    desc: 'File for express.static config.',
     default: {},
     alias: 'S',
     type: 'file',
