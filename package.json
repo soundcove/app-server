@@ -3,33 +3,17 @@
   "version": "1.0.0",
   "description": "The application and application delivery server.",
   "main": "index.js",
-  "scripts": {
-    "test": "node test",
-    "setup": "npm install; npm link; exit 0"
-  },
-  "bin": {
-    "app": "index.js"
-  },
+  "author": "SoundCove",
+  "homepage": "https://github.com/soundcove",
+  "bugs": { "url": "https://github.com/soundcove/app-server/issues" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/soundcove/app-server.git"
   },
-  "keywords": [
-    "music",
-    "collaberative",
-    "share",
-    "listen"
-  ],
-  "author": "SoundCove Developer Team",
-  "bugs": {
-    "url": "https://github.com/soundcove/app-server/issues"
-  },
-  "homepage": "https://github.com/soundcove",
-  "engines": {
-    "node": "^4.1.0"
-  },
   "dependencies": {
-    "express": "latest",
-    "swig": "latest"
+    "express": "latest"
+  },
+  "bin": {
+    "app": "index.js"
   }
 }

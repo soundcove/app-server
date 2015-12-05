@@ -5,7 +5,6 @@ const http = require('http'),
       https = require('https'),
       lib = require('./lib'),
       path = require('path'),
-      swig = require('swig'),
       express = require('express'),
       args = lib.args(process.argv.slice(2)),
 
@@ -21,12 +20,6 @@ const opts = global.opts = {
   port: args.port || 80,
   sport: args.sport || 443
 };
-
-// Templating engine
-app
-.engine('html', swig.renderFile)
-.set('view engine', 'html')
-.set('views', opts.views);
 
 // Static files
 app.use('/static', lib.static());
