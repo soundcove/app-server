@@ -76,14 +76,6 @@ module.exports = {
     desc: 'File for app config.',
     alias: 'c',
     type: 'file',
-    config: true,
-  },
-
-  serve: {
-    desc: 'File for express.static config.',
-    alias: 'S',
-    type: 'file',
-    config: true,
   },
 
 };

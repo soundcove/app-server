@@ -16,15 +16,13 @@ let args = yargs
 .help('help')
 .usage('app [commands]')
 .options(cli)
+.config('config')
 .argv;
 
-// Load phase in config.
-args = Object.assign(args.config || {}, args);
-
 // Static files
-if (args.static) app.use('/static', serve(path.resolve(process.cwd(), args.static), args.serve));
-if (args.styles) app.use('/styles', serve(path.resolve(process.cwd(), args.styles), args.serve));
-if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scripts), args.serve));
+if (args.static) app.use('/static', serve(path.resolve(process.cwd(), args.static)));
+if (args.styles) app.use('/styles', serve(path.resolve(process.cwd(), args.styles)));
+if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scripts)));
 
 // Bower
 if (args.bower) app.use('/bower/:component/:file', (req, res) => {
