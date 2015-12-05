@@ -43,7 +43,7 @@ module.exports = {
   },
 
   http: {
-    http: 'Enable or disable HTTP',
+    desc: 'Enable or disable HTTP',
     default: true,
     alias: 'h',
     boolean: true,
@@ -51,7 +51,7 @@ module.exports = {
   },
 
   https: {
-    http: 'Enable or disable HTTPS.',
+    desc: 'Enable or disable HTTPS.',
     default: false,
     alias: 'H',
     boolean: true,
@@ -59,24 +59,40 @@ module.exports = {
   },
 
   host: {
-    host: 'HTTP and HTTPS servers\' host address.',
+    desc: 'HTTP and HTTPS servers\' host address.',
     default: '0.0.0.0',
     alias: 'd',
     type: 'string',
   },
 
   port: {
-    host: 'HTTP and HTTPS servers\'s host addresses.',
+    desc: 'HTTP and HTTPS servers\'s host addresses.',
     default: 80,
     alias: 'p',
     type: 'number',
   },
 
   sport: {
-    host: 'HTTPS server\'s port.',
+    desc: 'HTTPS server\'s port.',
     default: 443,
     alias: 'P',
     type: 'number',
+  },
+
+  config: {
+    desc: 'File path to app config.',
+    default: {},
+    alias: 'C',
+    type: 'file',
+    config: true,
+  },
+
+  serve: {
+    desc: 'File path to express.static config.',
+    default: {},
+    alias: 'S',
+    type: 'file',
+    config: true,
   },
 
 };
