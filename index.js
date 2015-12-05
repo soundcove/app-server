@@ -3,49 +3,63 @@
 
 const http = require('http'),
       https = require('https'),
-      lib = require('./lib'),
+      cli = require('./cli'),
       path = require('path'),
       express = require('express'),
-      args = lib.args(process.argv.slice(2)),
+      serve = express.static,
+      yargs = require('yargs'),
 
 app = express();
 
-const opts = global.opts = {
-  views: path.resolve(args.views ? args.views : process.cwd() + '/views'),
-  static: path.resolve(args.static ? args.static : process.cwd() + '/static'),
-  age: args.age || '6h',
-  http: typeof args.http === 'undefined' || args.http,
-  https: args.https || false,
-  host: args.host || '0.0.0.0',
-  port: args.port || 80,
-  sport: args.sport || 443
-};
+// Arguments
+let args = yargs
+.help('help')
+.usage('app [commands]')
+.options(cli)
+.argv;
+
+// Load phase in config.
+args = Object.assign(args.config || {}, args);
 
 // Static files
-app.use('/static', lib.static());
+if (args.static) app.use('/static', serve(path.resolve(process.cwd(), args.static), args.serve));
+if (args.styles) app.use('/styles', serve(path.resolve(process.cwd(), args.styles), args.serve));
+if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scripts), args.serve));
+
+// Bower
+if (args.bower) app.use('/bower/:component/:file', (req, res) => {
+  let u = req.params;
+  res.sendfile(path.resolve(args.bower, u.component, 'dist', u.file));
+});
 
 // App
-app.get('*', lib.app);
+if (args.app) app.get('*', (req, res) => {
+  res.sendfile(path.resolve(args.app));
+});
 
 // 404 for other requests
-app.all('*', (x, r) => r.status(404).send({ 'error': 'not found' }));
+app.all('*', (req, res) => {
+  res.status(404);
+});
 
 // Deploy.
-(function(listener, app, certs){
-  if (opts.http)
-  http.Server(app).listen(
-    opts.port, opts.host,
+(function(listener, listenError, app, certs){
+  if (args.http) http.Server(app).listen(
+    args.port, args.host,
     () => listener('http')
-  );
+  ).on('error', listenError);
 
-  if (opts.https)
-  https.Server(certs, app).listen(
-    opts.sport, opts.host,
+  if (args.https) https.Server(certs, app).listen(
+    args.sport, args.host,
     () => listener('https')
-  );
+  ).on('error', listenError);
 
 })(function(server){
-  console.log(server + '://' + opts.host + ':' + opts.port + '/');
+  console.log(server + '://' + args.host + ':' + args.port + '/');
+}, function(e){
+  if (e.code === 'EACCES') console.log('You need to run as root (sudo).');
+  if (e.code === 'EADDRINUSE') console.log('That port ('+e.port+') is in use.');
+  else throw e;
 }, app, {
   // TODO: Get SSL certs.
 });
