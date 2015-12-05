@@ -19,8 +19,6 @@ let args = yargs
 .config('config')
 .argv;
 
-console.log(args);
-
 // Static files
 if (args.static) app.use('/static', serve(path.resolve(process.cwd(), args.static), args.serve));
 if (args.styles) app.use('/styles', serve(path.resolve(process.cwd(), args.styles), args.serve));
