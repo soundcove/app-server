@@ -29,17 +29,21 @@ if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scr
 // Bower
 if (args.bower) app.use('/bower/:component/:file', (req, res) => {
   let u = req.params;
-  res.sendfile(path.resolve(args.bower, u.component, 'dist', u.file));
+  res.sendFile(path.resolve(args.bower, u.component, 'dist', u.file), (err) => {
+    res.sendStatus(err.status);
+  });
 });
 
 // App
 if (args.app) app.get('*', (req, res) => {
-  res.sendfile(path.resolve(args.app));
+  res.sendFile(path.resolve(args.app), (err) => {
+    res.sendStatus(err.status);
+  });
 });
 
 // 404 for other requests
 app.all('*', (req, res) => {
-  res.status(404);
+  res.sendStatus(404);
 });
 
 // Deploy.
