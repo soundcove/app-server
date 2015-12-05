@@ -30,14 +30,14 @@ if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scr
 if (args.bower) app.use('/bower/:component/:file', (req, res) => {
   let u = req.params;
   res.sendFile(path.resolve(args.bower, u.component, 'dist', u.file), (err) => {
-    res.sendStatus(err.status);
+    res.sendStatus(404);
   });
 });
 
 // App
 if (args.app) app.get('*', (req, res) => {
   res.sendFile(path.resolve(args.app), (err) => {
-    res.sendStatus(err.status);
+    res.sendStatus(500);
   });
 });
 
