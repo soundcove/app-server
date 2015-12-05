@@ -35,13 +35,6 @@ module.exports = {
     type: 'directory',
   },
 
-  age: {
-    desc: 'Time for max-age Cache-Control to expire.',
-    default: '6h',
-    alias: 'A',
-    type: 'ms format',
-  },
-
   http: {
     desc: 'Enable or disable HTTP',
     default: true,
