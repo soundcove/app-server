@@ -11,6 +11,7 @@
     "url": "git+https://github.com/soundcove/app-server.git"
   },
   "dependencies": {
+    "yargs": "latest",
     "express": "latest"
   },
   "bin": {
