@@ -6,33 +6,32 @@ The app server uses Swig templates to separate components of the website into fi
 
 ## Installation
 
-Clone this repository and setup:
+You can `npm install` this off GitHub:
 
 ```
-$ git clone https://github.com/soundcove/app-server.git my-app
-$ cd my-app
-$ npm run setup
+$ npm instal --global soundcove/app-server
 ```
-
-Note: `npm run setup` triggers `npm link` to give you access to the `app` command, you may need to run `sudo npm install` if you don't have permission to your npm bin. 
 
 ## Usage
 
 ```
-$ app [options]
+app [commands]
+
+Options:
+  --help         Show help                                                      
+  --app, -a      File for application.                   [default: "index.html"]
+  --bower, -b    Directory for bower_components.   [default: "bower_components"]
+  --scripts, -s  Directory for scripts.                     [default: "scripts"]
+  --styles, -c   Directory for styles.                       [default: "styles"]
+  --static, -x   Directory for static serve.                 [default: "static"]
+  --http, -h     Enable or disable HTTP                          [default: true]
+  --https, -H    Enable or disable HTTPS.                       [default: false]
+  --host, -d     HTTP and HTTPS servers' host address.      [default: "0.0.0.0"]
+  --port, -p     HTTP and HTTPS servers's host addresses.          [default: 80]
+  --sport, -P    HTTPS server's port.                             [default: 443]
+  --config, -C   File for app config.                                           
+  --serve, -S    File for express.static config.                               
 ```
-
-### options
-These options follow the format `--name=value`, e.g. `--foo="bar"`, `--foo=1337`, `--foo=false`.
-
- - `--views`: An alternative path to your Swig views.
- - `--static`: An alternative path to your static files.
- - `--age`: Set a cache expiration time. (Default: `'6h'`)
- - `--http`: Enable or disable the HTTP server. (Default `true`)
- - `--https`: Enable or disable the HTTPS server. (Default: `false`)
- - `--host`: An address to listen on. (Default: `'0.0.0.0'`)
- - `--port`: A port for the HTTP server to listen on. (Default: `80`)
- - `--sport`: A port for the HTTPS server to listen on. (Default: `443`)
 
 ## Contributing
 Please see the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information on how to contribute to soundcove.
