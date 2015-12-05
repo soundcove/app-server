@@ -27,15 +27,15 @@ if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scr
 // Bower
 if (args.bower) app.use('/bower/:component/:file', (req, res) => {
   let u = req.params;
-  res.sendFile(path.resolve(args.bower, u.component, 'dist', u.file), () => {
-    res.sendStatus(404);
+  res.sendFile(path.resolve(args.bower, u.component, 'dist', u.file), (e) => {
+    if (e) res.sendStatus(404);
   });
 });
 
 // App
 if (args.app) app.get('*', (req, res) => {
-  res.sendFile(path.resolve(args.app), () => {
-    res.sendStatus(500);
+  res.sendFile(path.resolve(args.app), (e) => {
+    if (e) res.sendStatus(500);
   });
 });
 
