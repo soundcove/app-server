@@ -20,21 +20,21 @@ let args = yargs
 .argv;
 
 // Static files
-if (args.static) app.use('/static', serve(path.resolve(process.cwd(), args.static)));
-if (args.styles) app.use('/styles', serve(path.resolve(process.cwd(), args.styles)));
-if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scripts)));
+if (args.static) app.use('/static', serve(path.resolve(process.cwd(), args.static), args.serve));
+if (args.styles) app.use('/styles', serve(path.resolve(process.cwd(), args.styles), args.serve));
+if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scripts), args.serve));
 
 // Bower
 if (args.bower) app.use('/bower/:component/:file', (req, res) => {
   let u = req.params;
-  res.sendFile(path.resolve(args.bower, u.component, 'dist', u.file), (err) => {
+  res.sendFile(path.resolve(args.bower, u.component, 'dist', u.file), () => {
     res.sendStatus(404);
   });
 });
 
 // App
 if (args.app) app.get('*', (req, res) => {
-  res.sendFile(path.resolve(args.app), (err) => {
+  res.sendFile(path.resolve(args.app), () => {
     res.sendStatus(500);
   });
 });
