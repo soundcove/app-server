@@ -79,10 +79,4 @@ module.exports = {
     config: true,
   },
 
-  serve: {
-    desc: 'File for express.static config.',
-    alias: 'o',
-    type: 'object',
-  },
-
 };

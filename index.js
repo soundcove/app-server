@@ -6,7 +6,6 @@ const http = require('http'),
       cli = require('./cli'),
       path = require('path'),
       express = require('express'),
-      serve = express.static,
       yargs = require('yargs'),
 
 app = express();
