@@ -32,18 +32,21 @@ let defaults = {
 // Static files
 if (args.static) {
   if (typeof args.static === 'string')
-    args.static = [{url: '/' + args.static, dir: args.static}];
-  else if (!Array.isArray(args.static)) args.static = [args.static];
+    args.static = [{url: '/' + path.basename(args.static), dir: args.static}];
+  else if (!Array.isArray(args.static))
+    args.static = [{
+      url: args.static.url ? '/' + path.basename(args.static.url) : '/static',
+      dir: args.static.dir ? args.static.dir : 'static',
+      options: args.static
+    }];
   else
     throw new Error('static must be a object or array of objects');
-
-  console.log(args);
 
   args.static.forEach(function(serve){
     if (typeof serve !== 'object')
       throw new Error('static must be a object or array of objects');
 
-    serve = Object.assign(serve, defaults);
+    serve = Object.assign(defaults, serve);
     app.use(serve.url, express.static(path.resolve(serve.dir), serve.options));
   });
 }
