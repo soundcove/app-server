@@ -76,7 +76,6 @@ module.exports = {
     desc: 'File for app config.',
     alias: 'c',
     type: 'file',
-    config: true,
   },
 
 };

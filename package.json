@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "yargs": "latest",
+    "refig": "latest",
     "express": "latest"
   },
   "bin": {
