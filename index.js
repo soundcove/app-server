@@ -19,10 +19,35 @@ let args = yargs
 .config('config')
 .argv;
 
+let defaults = {
+  url: '/static',
+  dir: 'static',
+  options: {
+    maxAge: '6h',
+    index: [ 'index.html' ],
+    dotfiles: 'deny',
+    extensions: [ 'html', 'htm', 'php', 'css', 'js', 'png', 'jpg' ]
+  }
+};
+
 // Static files
-if (args.static) app.use('/static', serve(path.resolve(process.cwd(), args.static), args.serve));
-if (args.styles) app.use('/styles', serve(path.resolve(process.cwd(), args.styles), args.serve));
-if (args.scripts) app.use('/scripts', serve(path.resolve(process.cwd(), args.scripts), args.serve));
+if (args.static) {
+  if (typeof args.static === 'string')
+    args.static = [{url: '/' + args.static, dir: args.static}];
+  else if (!Array.isArray(args.static)) args.static = [args.static];
+  else
+    throw new Error('static must be a object or array of objects');
+
+  console.log(args);
+
+  args.static.forEach(function(serve){
+    if (typeof serve !== 'object')
+      throw new Error('static must be a object or array of objects');
+
+    serve = Object.assign(serve, defaults);
+    app.use(serve.url, express.static(path.resolve(serve.dir), serve.options));
+  });
+}
 
 // Bower
 if (args.bower) app.use('/bower/:component/:file', (req, res) => {
