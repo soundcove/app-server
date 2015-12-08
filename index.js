@@ -18,9 +18,7 @@ let args = yargs
 .options(cli)
 .argv;
 
-let conf = refig
-.set('async', false)
-.read(path.resolve(args.config));
+let conf = refig.readSync(args.config);
 
 let opts = Object.assign(args, conf);
 
