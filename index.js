@@ -41,7 +41,6 @@ if (opts.static) {
     if (typeof serve !== 'object')
       throw new Error('static must be a object or array of objects');
 
-    console.log(opts);
     app.use(serve.url, express.static(path.resolve(serve.dir), serve.options));
   });
 }
