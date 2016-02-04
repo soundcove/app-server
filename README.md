@@ -29,7 +29,7 @@ Options:
   --host, -d     HTTP and HTTPS servers' host address.      [default: "0.0.0.0"]
   --port, -p     HTTP and HTTPS servers's host addresses.          [default: 80]
   --sport, -P    HTTPS server's port.                             [default: 443]
-  --config, -c   File for app config.                                                                                                           
+  --config, -c   File for app config.                                                                 
 ```
 
 ## Contributing
