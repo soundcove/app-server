@@ -7,9 +7,7 @@ const http = require('http'),
       path = require('path'),
       express = require('express'),
       yargs = require('yargs'),
-      refig = require('refig'),
-
-app = express();
+      app = express();
 
 // Arguments
 let args = yargs
@@ -18,7 +16,18 @@ let args = yargs
 .options(cli)
 .argv;
 
-let conf = refig.readSync(args.config);
+let conf = require('rc')('app-server', {
+  app: 'index.html',
+  bower: 'bower_components',
+  scripts: 'scripts',
+  styles: 'styles',
+  static: 'static',
+  http: true,
+  https: false,
+  host: '0.0.0.0',
+  port: 80,
+  sport: 443
+});
 
 let opts = Object.assign(args, conf);
 
