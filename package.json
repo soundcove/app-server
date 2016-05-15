@@ -5,15 +5,17 @@
   "main": "index.js",
   "author": "SoundCove",
   "homepage": "https://github.com/soundcove",
-  "bugs": { "url": "https://github.com/soundcove/app-server/issues" },
+  "bugs": {
+    "url": "https://github.com/soundcove/app-server/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/soundcove/app-server.git"
   },
   "dependencies": {
-    "yargs": "latest",
-    "refig": "latest",
-    "express": "latest"
+    "express": "latest",
+    "rc": "^1.1.6",
+    "yargs": "latest"
   },
   "bin": {
     "app": "index.js"
