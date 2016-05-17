@@ -1,23 +1,28 @@
 {
   "name": "app-server",
-  "version": "1.0.0",
-  "description": "The application and application delivery server.",
+  "version": "3.0.0",
+  "description": "SoundCove's application server.",
   "main": "index.js",
-  "author": "SoundCove",
-  "homepage": "https://github.com/soundcove",
-  "bugs": {
-    "url": "https://github.com/soundcove/app-server/issues"
-  },
+  "bin": "cli.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/soundcove/app-server.git"
+    "url": "https://github.com/soundcove/app-server"
+  },
+  "scripts": {
+    "test": "node test | tap-spec"
+  },
+  "private": true,
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "eslint": "^2.10.1",
+    "eslint-config-google": "^0.5.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.1"
   },
   "dependencies": {
-    "express": "latest",
-    "rc": "^1.1.6",
-    "yargs": "latest"
-  },
-  "bin": {
-    "app": "index.js"
+    "async-each": "^1.0.0",
+    "minimist": "^1.2.0"
   }
 }
