@@ -1,95 +1,95 @@
-#!/usr/bin/env node
-'use strict';
+var Server = require('http').Server;
+var fs = require('fs');
+var path = require('path');
+var each = require('async-each');
 
-const http = require('http'),
-      https = require('https'),
-      cli = require('./cli'),
-      path = require('path'),
-      express = require('express'),
-      yargs = require('yargs'),
-      app = express();
+var htmlHeader = {'Content-Type': 'text/html'};
+var jsHeader = {'Content-Type': 'application/javascript'};
+var cssHeader = {'Content-Type': 'text/css'};
+var faviconHeader = {'Content-Type': 'image/png'};
 
-// Arguments
-let args = yargs
-.help('help')
-.usage('app [commands]')
-.options(cli)
-.argv;
+var app = module.exports = function server(opts) {
+  // Create configuration and server with input options and defaults.
+  var config = Object.assign({}, app.defaults, opts);
+  var server = config.server || new Server();
 
-let conf = require('rc')('app-server', {
-  app: 'index.html',
-  bower: 'bower_components',
-  scripts: 'scripts',
-  styles: 'styles',
-  static: 'static',
-  http: true,
-  https: false,
-  host: '0.0.0.0',
-  port: 80,
-  sport: 443
-});
+  // Resolve files.
+  var html;
+  var js;
+  var css;
+  var errors = {
+    500: '<html><head><title>500</title></head><body>' +
+           '<h1 style="text-align:center;">500<hr/>Internal Server Error</h1>' +
+           '</body></html>',
 
-let opts = Object.assign(args, conf);
-
-// Static files
-if (opts.static) {
-  if (typeof opts.static === 'string')
-    opts.static = [{url: '/' + path.basename(opts.static), dir: opts.static}];
-  else if (!Array.isArray(opts.static))
-    opts.static = [{
-      url: opts.static.url ? '/' + path.basename(opts.static.url) : '/static',
-      dir: opts.static.dir ? opts.static.dir : 'static',
-      options: opts.static
-    }];
-  else
-    throw new Error('static must be a object or array of objects');
-
-  opts.static.forEach(function(serve){
-    if (typeof serve !== 'object')
-      throw new Error('static must be a object or array of objects');
-
-    app.use(serve.url, express.static(path.resolve(serve.dir), serve.options));
+    404: '<html><head><title>404</title></head><body>' +
+           '<h1 style="text-align:center;">404<hr/>Resource Not Found</h1>' +
+           '</body></html>'
+  };
+  each([
+    path.resolve(config.html),
+    path.resolve(config.js),
+    path.resolve(config.css),
+    path.resolve(config['404'])
+  ], fs.readFile, function(err, files) {
+    if (err) {
+      throw err;
+    }
+    html = files[0];
+    js = files[1];
+    css = files[2];
+    errors['404'] = files[3];
+    server.emit('resources ready');
   });
-}
 
-// Bower
-if (opts.bower) app.use('/bower/:component/:file', (req, res) => {
-  let u = req.params;
-  res.sendFile(path.resolve(opts.bower, u.component, 'dist', u.file), (e) => {
-    if (e) res.sendStatus(404);
+  // Silently fail with favicon if invalid
+  var favicon = new Buffer([]);
+  fs.readFile(path.resolve(config.favicon), function(err, data) {
+    if (err) {
+      console.log(err);
+    } else {
+      favicon = data;
+    }
   });
-});
 
-// App
-if (opts.app) app.get('*', (req, res) => {
-  res.sendFile(path.resolve(opts.app), (e) => {
-    if (e) res.sendStatus(500);
+  var url = {
+    html: '/' + path.basename(config.html),
+    js: '/' + path.basename(config.js),
+    css: '/' + path.basename(config.css)
+  };
+  server.on('request', function request(req, res) {
+    if (!html || !css || !js) {
+      res.writeHead(500, htmlHeader);
+      res.write(errors['500']);
+      return;
+    }
+
+    var current = req.url;
+    if (current === '/' || current === url.html) {
+      res.writeHead(200, htmlHeader);
+      res.write(html);
+    } else if (current === url.js) {
+      res.writeHead(200, jsHeader);
+      res.write(js);
+    } else if (current === url.css) {
+      res.writeHead(200, cssHeader);
+      res.write(css);
+    } else if (current === '/favicon.ico') {
+      res.writeHead(200, faviconHeader);
+      res.write(favicon);
+    } else {
+      res.writeHead(404, htmlHeader);
+      res.write(errors['404']);
+    }
   });
-});
 
-// 404 for other requests
-app.all('*', (req, res) => {
-  res.sendStatus(404);
-});
+  return server;
+};
 
-// Deploy.
-(function(listener, listenError, app, certs){
-  if (opts.http) http.Server(app).listen(
-    opts.port, opts.host,
-    () => listener('http')
-  ).on('error', listenError);
-
-  if (opts.https) https.Server(certs, app).listen(
-    opts.sport, opts.host,
-    () => listener('https')
-  ).on('error', listenError);
-
-})(function(server){
-  console.log(server + '://' + opts.host + ':' + opts.port + '/');
-}, function(e){
-  if (e.code === 'EADDRINUSE') console.log('That port ('+e.port+') is in use.');
-  else if (e.code === 'EACCES') console.log('You need to run as root (sudo).');
-  else throw e;
-}, app, {
-  // TODO: Get SSL certs.
-});
+app.defaults = {
+  html: 'index.html',
+  js: 'index.js',
+  css: 'index.css',
+  favicon: 'favicon.png',
+  404: '404.html'
+};
