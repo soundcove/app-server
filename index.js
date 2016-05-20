@@ -29,8 +29,7 @@ var app = module.exports = function server(opts) {
   each([
     path.resolve(config.html),
     path.resolve(config.js),
-    path.resolve(config.css),
-    path.resolve(config['404'])
+    path.resolve(config.css)
   ], fs.readFile, function(err, files) {
     if (err) {
       throw err;
@@ -38,17 +37,29 @@ var app = module.exports = function server(opts) {
     html = files[0];
     js = files[1];
     css = files[2];
-    errors['404'] = files[3];
     server.emit('resources ready');
   });
 
-  // Silently fail with favicon if invalid
+  // Gracefully fail with favicon if invalid
   var favicon = new Buffer([]);
   fs.readFile(path.resolve(config.favicon), function(err, data) {
     if (err) {
-      console.log(err);
+      if (!opts.silent) {
+        console.log(err);
+      }
     } else {
       favicon = data;
+    }
+  });
+
+  // Gracefully fail with 404 is invalid
+  fs.readFile(path.resolve(config['404']), function(err, data) {
+    if (err) {
+      if (!opts.silent) {
+        console.log(err);
+      }
+    } else {
+      errors['404'] = data;
     }
   });
 
