@@ -74,10 +74,10 @@ var app = module.exports = function server(opts) {
     if (current === '/') {
       res.writeHead(200, htmlHeader);
       res.write(html);
-    } else if (current === '/app.js') {
+    } else if (current === '/index.js') {
       res.writeHead(200, jsHeader);
       res.write(js);
-    } else if (current === '/app.css') {
+    } else if (current === '/index.css') {
       res.writeHead(200, cssHeader);
       res.write(css);
     } else if (current === '/favicon.ico') {
