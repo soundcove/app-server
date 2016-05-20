@@ -87,6 +87,7 @@ var app = module.exports = function server(opts) {
       res.writeHead(404, htmlHeader);
       res.write(errors['404']);
     }
+    res.end();
   });
 
   return server;
