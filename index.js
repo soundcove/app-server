@@ -63,11 +63,6 @@ var app = module.exports = function server(opts) {
     }
   });
 
-  var url = {
-    html: '/' + path.basename(config.html),
-    js: '/' + path.basename(config.js),
-    css: '/' + path.basename(config.css)
-  };
   server.on('request', function request(req, res) {
     if (!html || !css || !js) {
       res.writeHead(500, htmlHeader);
@@ -76,13 +71,13 @@ var app = module.exports = function server(opts) {
     }
 
     var current = req.url;
-    if (current === '/' || current === url.html) {
+    if (current === '/') {
       res.writeHead(200, htmlHeader);
       res.write(html);
-    } else if (current === url.js) {
+    } else if (current === '/app.js') {
       res.writeHead(200, jsHeader);
       res.write(js);
-    } else if (current === url.css) {
+    } else if (current === '/app.css') {
       res.writeHead(200, cssHeader);
       res.write(css);
     } else if (current === '/favicon.ico') {
